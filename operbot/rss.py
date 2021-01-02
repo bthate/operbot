@@ -1,4 +1,4 @@
-# OPBOT - operbot (rss.py)
+# OPERBOT - operbot (rss.py)
 #
 # this file is placed in the public domain
 
@@ -134,7 +134,7 @@ class Fetcher(op.Object):
     def run(self):
         "all feeds"
         thrs = []
-        for fn, o in op.dbs.all("op.rss.Rss"):
+        for fn, o in op.dbs.all("operbot.rss.Rss"):
             thrs.append(op.thr.launch(self.fetch, o))
         return thrs
 

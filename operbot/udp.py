@@ -1,4 +1,4 @@
-# OPBOT - operbot (udp.py)
+# OPERBOT - operbot (udp.py)
 #
 # this file is placed in the public domain
 

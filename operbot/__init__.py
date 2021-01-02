@@ -1,4 +1,4 @@
-# OPBOT - operbot (opbot)
+# OPERBOT - operbot (opbot)
 #
 # this file is placed in the public domain
 
@@ -6,11 +6,11 @@
 
 # imports
 import op
-import opbot.cmd
-import opbot.irc
-import opbot.rss
-import opbot.tbl
-import opbot.udp
+import operbot.cmd
+import operbot.irc
+import operbot.rss
+import operbot.tbl
+import operbot.udp
 
 # defines
 

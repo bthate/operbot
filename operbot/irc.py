@@ -1,4 +1,4 @@
-# OPBOT - operbot (irc.py)
+# OPERBOT - operbot (irc.py)
 #
 # this file is placed in the public domain
 
@@ -38,11 +38,11 @@ class Cfg(op.Cfg):
 
     def __init__(self):
         super().__init__()
-        self.channel = "#opbot"
-        self.nick = "opbot"
+        self.channel = "#operbot"
+        self.nick = "operbot"
         self.server = "localhost"
-        self.username = "opbot"
-        self.realname = "opbot"
+        self.username = "operbot"
+        self.realname = "operbot"
 
 class Event(op.hdl.Event):
 
@@ -316,7 +316,7 @@ class IRC(op.hdl.Handler):
         elif cmd == "433":
             nick = self.cfg.nick + "_"
             self.cfg.nick = nick
-            self.raw("NICK %s" % self.cfg.nick or "opbot")
+            self.raw("NICK %s" % self.cfg.nick or "operbot")
         return e
 
     def raw(self, txt):
@@ -380,8 +380,9 @@ class IRC(op.hdl.Handler):
 
     def NOTICE(self, event):
         "respond with version of the okbot"
+        from operbot import __version__
         if event.txt.startswith("VERSION"):
-            txt = "\001VERSION %s %s - %s\001" % ("OPBOT", op.__version__, "operbot")
+            txt = "\001VERSION %s %s - %s\001" % ("OPERBOT", __version__, "operbot")
             self.command("NOTICE", event.channel, txt)
 
     def PRIVMSG(self, event):
@@ -445,7 +446,7 @@ class DCC(op.hdl.Handler):
         #os.set_inheritable(s.fileno(), os.O_RDWR)
         self._sock = s
         self._fsock = self._sock.makefile("rw")
-        self.raw('Welcome to OLIB %s' % event.nick)
+        self.raw('Welcome to OPERBOT %s' % event.nick)
         self.origin = event.origin
         op.thr.launch(self.input)
         super().start()

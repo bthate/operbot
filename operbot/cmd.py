@@ -1,13 +1,13 @@
-# OPBOT - operbot (cmd.py)
+# OPERBOT - operbot (cmd.py)
 #
 # this file is placed in the public domain
 
-"opbot commands (cmd)"
+"operbot commands (cmd)"
 
 # imports
 
 import op
-import opbot
+import operbot
 import threading
 import time
 
@@ -20,7 +20,7 @@ def __dir__():
 
 def cfg(event):
     "configure irc (cfg)"
-    c = opbot.irc.Cfg()
+    c = operbot.irc.Cfg()
     op.dbs.last(c)
     if not event.prs.sets:
         return event.reply(op.format(c, skip=["username", "realname"]))
@@ -33,7 +33,7 @@ def dpl(event):
     if len(event.args) < 2:
         return
     setter = {"display_list": event.args[1]}
-    for fn, o in op.dbs.last_match("opbot.rss.Rss", {"rss": event.args[0]}):
+    for fn, o in op.dbs.last_match("operbot.rss.Rss", {"rss": event.args[0]}):
         op.edit(o, setter)
         op.save(o)
         event.reply("ok")
@@ -42,7 +42,7 @@ def ftc(event):
     "run a fetch (ftc)"
     res = []
     thrs = []
-    fetcher = opbot.rss.Fetcher()
+    fetcher = operbot.rss.Fetcher()
     fetcher.start(False)
     thrs = fetcher.run()
     for thr in thrs:
@@ -58,7 +58,7 @@ def rem(event):
     selector = {"rss": event.args[0]}
     nr = 0
     got = []
-    for fn, o in op.dbs.find("opbot.rss.Rss", selector):
+    for fn, o in op.dbs.find("operbot.rss.Rss", selector):
         nr += 1
         o._deleted = True
         got.append(o)
@@ -71,14 +71,14 @@ def rss(event):
     if not event.args:
         return
     url = event.args[0]
-    res = list(op.dbs.find("opbot.rss.Rss", {"rss": url}))
+    res = list(op.dbs.find("operbot.rss.Rss", {"rss": url}))
     if res:
         return
-    o = opbot.rss.Rss()
+    o = operbot.rss.Rss()
     o.rss = event.args[0]
     op.save(o)
     event.reply("ok")
 
 def ver(event):
     "show version (ver)"
-    event.reply("OPBOT %s - operbot" % op.__version__)
+    event.reply("OPERBOT %s - operbot" % op.__version__)

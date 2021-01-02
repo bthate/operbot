@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# OPBOT - operbot (bin/opbot)
+# OPERBOT - operbot (bin/operrun)
 #
 # this file is placed in the public domain
 
@@ -11,7 +11,7 @@ import sys
 
 # defines
 
-wd = "/var/lib/opbot/"
+wd = "/var/lib/operbot/"
 
 # classes
 
@@ -62,12 +62,13 @@ def main():
     else:
         h = Console()
     h.load("op.cmd")
-    h.load("opbot.cmd")
+    h.load("operbot.cmd")
     if cfg.txt:
         return h.cmd(cfg.otxt)
-    h.init(cfg.sets.mods, "opbot")
-    h.start()
-    h.wait()
+    if "s" in cfg.opts or "d" in cfg.opts:
+        h.init(cfg.sets.mods, "operbot")
+        h.start()
+        h.wait()
 
 # runtime
 
