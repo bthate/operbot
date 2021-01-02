@@ -1,0 +1,49 @@
+#!/usr/bin/python3
+# OPBOT - operbot (bin/env)
+#
+# this file is placed in the public domain
+
+"build environment"
+
+# imports
+
+import os
+
+# defines
+
+old =  os.getcwd()
+pn = old.split(os.sep)[-1].lower()
+
+# functions
+
+def open(txt):
+    try:
+        for line in os.popen(txt).readlines():
+            print(line.rstrip())
+    except:
+        pass
+
+def main():
+    open("bin/clean")
+    try:
+        shutil.rmtree("build")
+    except:
+        pass
+    try:
+        shutil.rmtree("dist")
+    except:
+        pass
+    try:
+        shutil.rmtree("%s.egg-info" % genoclaim)
+    except:
+        pass
+    for line in os.popen("python3 setup.py sdist").readlines():
+        print(line.strip())
+    open("python3 -mvirtualenv -p python3 env")
+    open("env/bin/pip3 install %s -f dist --force-reinstall" % pn)
+
+# runtime
+
+if __name__ == "__main__":
+    main()
+    open("tar zcf env.tar.gz env")

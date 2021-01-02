@@ -1,0 +1,44 @@
+#!/usr/bin/python3
+# OPBOT - operbot (bin/test)
+#
+# this file is placed in the public domain
+
+"unittests"
+
+# imports
+
+import os, sys ; sys.path.insert(0, os.getcwd())
+
+import op
+import time
+import unittest
+
+# defines
+
+test_path = os.getcwd() + os.sep + "test"
+wd = os.path.expanduser("~/.test")
+
+# functions
+
+def open(txt):
+    try:
+        for line in os.popen(txt).readlines():
+            print(line.rstrip())
+    except:
+        pass
+
+def main():
+    open("rm -fR ~/.test")
+    op.debug = True
+    cfg = op.prs.parse_cli(wd)
+    if cfg.txt:
+        pat = "test_%s*" % cfg.txt
+    else:
+        pat = "test*"
+    suite = unittest.loader.TestLoader().discover(test_path, pattern=pat)
+    unittest.TextTestRunner(verbosity=3).run(suite)
+
+# runtime
+
+op.trm.execute(main)
+os._exit(0)

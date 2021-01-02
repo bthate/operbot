@@ -1,0 +1,5 @@
+# OPBOT - operbot (bin/opctl)
+#
+# this file is placed in the public domain
+
+systemd-run -q --shell --property=DynamicUser=yes --property=StateDirectory=opbot
