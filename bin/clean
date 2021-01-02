@@ -2,4 +2,4 @@
 #
 # this file is placed in the public domain
 
-rm -fR env.tar.gz env html docs/*~ docs/__pycache__ docs/op*.rst op/*~ op/__pycache__ opbot/*~ opbot/__pycache__ dist build *~ __pycache__ bin/*~ test/*~ test/__pycache__ opbot.egg-info
+rm -fR env.tar.gz env html docs/*~ docs/__pycache__ docs/oper*.rst op/*~ op/__pycache__ operbot/*~ operbot/__pycache__ dist build *~ __pycache__ bin/*~ test/*~ test/__pycache__ operbot.egg-info

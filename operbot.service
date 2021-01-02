@@ -1,0 +1,14 @@
+[Unit]
+Description=OPERBOT - operbot
+After=network-online.target
+
+[Service]
+DynamicUser=True
+StateDirectory=operbot
+LogsDirectory=operbot
+CacheDirectory=operbot
+ExecStart=/usr/local/bin/operbot -d mods=irc,udp,rss
+CapabilityBoundingSet=CAP_NET_RAW
+
+[Install]
+WantedBy=multi-user.target

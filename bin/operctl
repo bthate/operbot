@@ -1,5 +1,5 @@
-# OPBOT - operbot (bin/opctl)
+# OPERBOT - operbot (bin/operctl)
 #
 # this file is placed in the public domain
 
-systemd-run -q --pipe --property=DynamicUser=yes --property=StateDirectory=opbot oprun $*
+systemd-run -q --pipe --property=DynamicUser=yes --property=StateDirectory=operbot operbot $*

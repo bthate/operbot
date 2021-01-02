@@ -1,6 +1,77 @@
-# OPBOT - operbot (bin/opctl)
+#!/usr/bin/python3
+# OPERBOT - operbot (bin/operbot)
 #
 # this file is placed in the public domain
 
-systemd-run --property=DynamicUser=yes --property=StateDirectory=opbot -t --send-sighup oprun
+import atexit
+import op
+import os
+import readline
+import sys
 
+# defines
+
+wd = "/var/lib/operbot/"
+
+# classes
+
+class Console(op.hdl.Handler):
+
+    "console class"
+
+    def __init__(self):
+        super().__init__()
+        self.register("cmd", op.hdl.cmd)
+
+    def announce(self, txt):
+        "silence announcing"
+        self.direct(txt)
+
+    def direct(self, txt):
+        print(txt)
+
+    def input(self):
+        "loop for input"
+        while 1:
+            try:
+                e = self.poll()
+            except EOFError:
+                break
+            self.put(e)
+            e.wait()
+
+    def poll(self):
+        "wait for input"
+        return op.hdl.Command(input("> "))
+
+    def say(self, channel, txt):
+        "strip channel from output"
+        self.direct(txt)
+
+    def start(self):
+        "start console"
+        super().start()
+        op.thr.launch(self.input)
+
+# functions
+
+def main():
+    cfg = op.prs.parse_cli(wd)
+    if "d" in cfg.opts:
+        h = op.hdl.Handler()
+    else:
+        h = Console()
+    h.load("op.cmd")
+    h.load("operbot.cmd")
+    if "d" not in cfg.opts and cfg.txt:
+        return h.cmd(cfg.otxt)
+    if "s" in cfg.opts or "d" in cfg.opts:
+        h.init(cfg.sets.mods, "operbot")
+        h.start()
+        h.wait()
+
+# runtime
+
+cmds = []
+op.trm.execute(main)
+os._exit(0)
